@@ -15,7 +15,7 @@ that injects loader code and then calls the actual function.
 3. Start the game
 
 ## TODO/Roadmap
-- (When loader is compiled as debug target) it's worth to enable NFS The Run Debug Mode that is confirmed to exist by [research](https://github.com/mRally2/The-Run-Tools-Research.git) conducted by @mRally2
+- (When loader is compiled as debug target) it's worth to enable NFS The Run Debug Mode that is confirmed to exist by [research](https://github.com/mRally2/The-Run-Tools-Research.git) conducted by @_mRally2
 - There's a lot to do right now in terms of reverse engineering. For now the game has to be reverse engineered to find structures that are responsible
 for events to respond to them.
 - Create some sort of mod framework after majority of useful functions game/engine are found and hooked up
