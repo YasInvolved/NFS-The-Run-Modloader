@@ -1,0 +1,42 @@
+{
+  "version": 9,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "configure-x86-vs-msvc",
+      "displayName": "Visual Studio Generator (MSVC x86)",
+      "generator": "Visual Studio 17 2022",
+      "toolset": "v143",
+      "binaryDir": "${sourceDir}/build/x86-vs-msvc",
+      "cacheVariables": {
+        "NFS_MODLOADER_COMPILER_FRONTEND": "ClangCL"
+      }
+    },
+    {
+      "name": "configure-x86-vs-clangcl",
+      "displayName": "Visual Studio Generator (ClangCL x86)",
+      "generator": "Visual Studio 17 2022",
+      "toolset": "ClangCL",
+      "binaryDir": "${sourceDir}/build/x86-vs-clangcl",
+      "cacheVariables": {
+        "NFS_MODLOADER_COMPILER_FRONTEND": "MSVC"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-x86-vs-msvc",
+      "displayName": "[BUILD] Visual Studio Generator (MSVC x86)",
+      "configurePreset": "configure-x86-vs-msvc"
+    },
+    {
+      "name": "build-x86-vs-clangcl",
+      "displayName": "[BUILD] Visual Studio Generator (ClangCL x86)",
+      "configurePreset": "configure-x86-vs-clangcl"
+    }
+  ]
+}
