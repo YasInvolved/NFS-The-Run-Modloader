@@ -12,6 +12,7 @@
       "generator": "Visual Studio 17 2022",
       "toolset": "v143",
       "binaryDir": "${sourceDir}/build/x86-vs-msvc",
+      "architecture": "win32",
       "cacheVariables": {
         "NFS_MODLOADER_COMPILER_FRONTEND": "ClangCL"
       }
@@ -22,6 +23,7 @@
       "generator": "Visual Studio 17 2022",
       "toolset": "ClangCL",
       "binaryDir": "${sourceDir}/build/x86-vs-clangcl",
+      "architecture": "win32",
       "cacheVariables": {
         "NFS_MODLOADER_COMPILER_FRONTEND": "MSVC"
       }

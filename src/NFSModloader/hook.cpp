@@ -6,7 +6,7 @@ static HMODULE s_dinput8Module = nullptr;
 
 namespace real
 {
-   static DirectInput8Create_t DirectInput8Create = nullptr;
+   static DirectInput8Create_t RealDirectInput8Create = nullptr;
 }
 
 static inline void errorMsgBox(const std::string_view text)
@@ -27,22 +27,24 @@ static void loadDinput8()
       }
    }
 
-   if (real::DirectInput8Create == nullptr && s_dinput8Module != nullptr)
+   if (real::RealDirectInput8Create == nullptr && s_dinput8Module != nullptr)
    {
-      real::DirectInput8Create = reinterpret_cast<DirectInput8Create_t>(GetProcAddress(s_dinput8Module, "DirectInput8Create"));
-      if (real::DirectInput8Create == nullptr)
+      real::RealDirectInput8Create = reinterpret_cast<DirectInput8Create_t>(GetProcAddress(s_dinput8Module, "DirectInput8Create"));
+      if (real::RealDirectInput8Create == nullptr)
       {
          errorMsgBox("Failed to load DirectInput8Create");
       }
    }
 }
 
-// NOTE: Don't add any calling conventions like __stdcall or WINAPI, NFS looks for plain DirectInput8Create
 extern "C" __declspec(dllexport)
-HRESULT DirectInput8Create(HINSTANCE hInst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter)
+HRESULT WINAPI DirectInput8Create(HINSTANCE hInst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter)
 {
-   if (s_dinput8Module == nullptr || real::DirectInput8Create == nullptr)
+   if (s_dinput8Module == nullptr || real::RealDirectInput8Create == nullptr)
       loadDinput8();
 
-   return real::DirectInput8Create(hInst, dwVersion, riidltf, ppvOut, punkOuter);
+   return real::RealDirectInput8Create(hInst, dwVersion, riidltf, ppvOut, punkOuter);
 }
+
+// link to the correct function
+#pragma comment(linker, "/EXPORT:DirectInput8Create=_DirectInput8Create@20")
