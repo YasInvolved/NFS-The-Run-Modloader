@@ -6,7 +6,7 @@ static HMODULE s_dinput8Module = nullptr;
 
 namespace real
 {
-   static DirectInput8Create_t RealDirectInput8Create = nullptr;
+   static DirectInput8Create_t DirectInput8Create = nullptr;
 }
 
 static inline void errorMsgBox(const std::string_view text)
@@ -27,10 +27,10 @@ static void loadDinput8()
       }
    }
 
-   if (real::RealDirectInput8Create == nullptr && s_dinput8Module != nullptr)
+   if (real::DirectInput8Create == nullptr && s_dinput8Module != nullptr)
    {
-      real::RealDirectInput8Create = reinterpret_cast<DirectInput8Create_t>(GetProcAddress(s_dinput8Module, "DirectInput8Create"));
-      if (real::RealDirectInput8Create == nullptr)
+      real::DirectInput8Create = reinterpret_cast<DirectInput8Create_t>(GetProcAddress(s_dinput8Module, "DirectInput8Create"));
+      if (real::DirectInput8Create == nullptr)
       {
          errorMsgBox("Failed to load DirectInput8Create");
          std::abort();
@@ -41,13 +41,13 @@ static void loadDinput8()
 extern "C" __declspec(dllexport)
 HRESULT WINAPI DirectInput8Create(HINSTANCE hInst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter)
 {
-   if (s_dinput8Module == nullptr || real::RealDirectInput8Create == nullptr)
+   if (s_dinput8Module == nullptr || real::DirectInput8Create == nullptr)
       loadDinput8();
 
-   // empty call to Loader::GetInstance to initialize it
-   Loader::GetInstance();
+   // conduct a small test
+   Loader::GetInstance().getThreadPool().enqueue([]() { fmt::println("Hello from worker thread with id"); });
 
-   return real::RealDirectInput8Create(hInst, dwVersion, riidltf, ppvOut, punkOuter);
+   return real::DirectInput8Create(hInst, dwVersion, riidltf, ppvOut, punkOuter);
 }
 
 // link to the correct function

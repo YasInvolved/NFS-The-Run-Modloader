@@ -7,6 +7,7 @@ FILE* Loader::fErr;
 std::unique_ptr<Loader> Loader::s_instance = nullptr;
 
 Loader::Loader()
+   : m_threadPool(std::make_unique<nfsloader::ThreadPool>(4))
 {
    InitializeDebugTerminal();
 }
@@ -24,6 +25,12 @@ Loader& Loader::GetInstance()
    return *s_instance;
 }
 
+nfsloader::ThreadPool& Loader::getThreadPool()
+{
+   return *m_threadPool;
+}
+
+// static functions
 void Loader::InitializeDebugTerminal()
 {
 #ifdef NFS_MODLOADER_DEBUG
