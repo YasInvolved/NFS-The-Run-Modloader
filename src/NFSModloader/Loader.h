@@ -8,12 +8,17 @@ private:
    static FILE* fErr;
 
 public:
-   static void Initialize();
-   static void Destroy();
-
+   static Loader& GetInstance();
 private:
-   static void InitializeTerminal();
-   static void DestroyTerminal();
+   friend struct std::default_delete<Loader>;
+
+   Loader();
+   ~Loader();
+
+   static void InitializeDebugTerminal();
+   static void DestroyDebugTerminal();
+
+   static std::unique_ptr<Loader> s_instance;
 };
 
 #endif

@@ -1,28 +1,43 @@
 #include "Loader.h"
+#include "pch.h"
 
 FILE* Loader::fOut;
 FILE* Loader::fErr;
 
-void Loader::Initialize()
+std::unique_ptr<Loader> Loader::s_instance = nullptr;
+
+Loader::Loader()
 {
-   InitializeTerminal();
+   InitializeDebugTerminal();
 }
 
-void Loader::Destroy()
+Loader::~Loader()
 {
-   DestroyTerminal();
+   DestroyDebugTerminal();
 }
 
-void Loader::InitializeTerminal()
+Loader& Loader::GetInstance()
 {
+   if (s_instance == nullptr)
+      s_instance.reset(new Loader());
+
+   return *s_instance;
+}
+
+void Loader::InitializeDebugTerminal()
+{
+#ifdef NFS_MODLOADER_DEBUG
    AllocConsole();
    freopen_s(&fOut, "CONOUT$", "w", stdout);
    freopen_s(&fErr, "CONOUT$", "w", stderr);
+#endif
 }
 
-void Loader::DestroyTerminal()
+void Loader::DestroyDebugTerminal()
 {
+#ifdef NFS_MODLOADER_DEBUG
    fclose(fErr);
    fclose(fOut);
    FreeConsole();
+#endif
 }

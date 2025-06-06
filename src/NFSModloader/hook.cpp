@@ -33,6 +33,7 @@ static void loadDinput8()
       if (real::RealDirectInput8Create == nullptr)
       {
          errorMsgBox("Failed to load DirectInput8Create");
+         std::abort();
       }
    }
 }
@@ -42,6 +43,9 @@ HRESULT WINAPI DirectInput8Create(HINSTANCE hInst, DWORD dwVersion, REFIID riidl
 {
    if (s_dinput8Module == nullptr || real::RealDirectInput8Create == nullptr)
       loadDinput8();
+
+   // empty call to Loader::GetInstance to initialize it
+   Loader::GetInstance();
 
    return real::RealDirectInput8Create(hInst, dwVersion, riidltf, ppvOut, punkOuter);
 }
