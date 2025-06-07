@@ -22,6 +22,13 @@ static void loadDinput8()
 // so thread safe mechanism is needed here
 static std::atomic<bool> s_initialized = false;
 
+using DllCallbackReason = nfsloader::DllCallbackReason;
+
+static void dllCallback(const std::string& dllName, DllCallbackReason reason)
+{
+   fmt::println("{} has been {}", dllName, reason == DllCallbackReason::LOADED ? "loaded" : "unloaded");
+}
+
 extern "C" __declspec(dllexport)
 HRESULT WINAPI DirectInput8Create(HINSTANCE hInst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter)
 {
@@ -35,7 +42,7 @@ HRESULT WINAPI DirectInput8Create(HINSTANCE hInst, DWORD dwVersion, REFIID riidl
       HMODULE thisHandle = nfsloader::utils::GetThisDllHandle();
       DisableThreadLibraryCalls(thisHandle);
       const auto& loader = Loader::GetInstance();
-      loader.getThreadPool().enqueue(nfsloader::initializeDllNotifications);
+      loader.getDllObserver().addCallback(dllCallback);
    }
 
    return real::DirectInput8Create(hInst, dwVersion, riidltf, ppvOut, punkOuter);

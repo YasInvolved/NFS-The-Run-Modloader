@@ -31,6 +31,15 @@ namespace nfsloader::utils
       return path;
    }
 
+   [[nodiscard]] inline std::string UnicodeToMultibyte(const wchar_t* wstr, size_t length)
+   {
+      int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr, static_cast<int>(length), nullptr, 0, nullptr, nullptr);
+      std::string buf(size_needed, 0);
+      WideCharToMultiByte(CP_UTF8, 0, wstr, static_cast<int>(length), buf.data(), size_needed, nullptr, nullptr);
+
+      return buf;
+   }
+
    [[nodiscard]] inline HMODULE GetThisDllHandle()
    {
       HMODULE hModule = nullptr;

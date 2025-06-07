@@ -1,7 +1,7 @@
 #ifndef _NFS_MODLOADER_THREAD_POOL_H_INCLUDED_
 #define _NFS_MODLOADER_THREAD_POOL_H_INCLUDED_
 
-#include "pch.h"
+#include <NFSModloader/pch.h>
 
 namespace nfsloader
 {

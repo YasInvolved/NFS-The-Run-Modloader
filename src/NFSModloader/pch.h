@@ -15,9 +15,9 @@
 #include <atomic>
 #include <future>
 
-#include "framework.h"
-#include "utils.h"
-#include "loader/Loader.h"
-#include "dllLoadMonitor.h"
+#include <NFSModloader/framework.h>
+#include <NFSModloader/utils.h>
+#include <NFSModloader/loader/dllLoadMonitor.h>
+#include <NFSModloader/loader/Loader.h>
 
 #endif

@@ -1,4 +1,4 @@
-add_library(NFSModloader SHARED "hook.cpp" "framework.h" "pch.h" "pch.cpp" "utils.h"  "loader/Loader.h" "loader/Loader.cpp" "loader/ThreadPool.h" "loader/ThreadPool.cpp" "dllLoadMonitor.cpp" "dllLoadMonitor.h")
+add_library(NFSModloader SHARED "hook.cpp" "framework.h" "pch.h" "pch.cpp" "utils.h"  "loader/Loader.h" "loader/Loader.cpp" "loader/ThreadPool.h" "loader/ThreadPool.cpp" "loader/DllObserver.cpp" "loader/DllObserver.h")
 set_target_properties(NFSModloader PROPERTIES OUTPUT_NAME "dinput8")
 
 target_precompile_headers(NFSModloader PRIVATE "pch.h")

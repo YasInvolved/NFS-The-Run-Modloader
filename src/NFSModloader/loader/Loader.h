@@ -16,11 +16,13 @@ public:
    static const Loader& GetInstance();
 
    nfsloader::ThreadPool& getThreadPool() const;
+   nfsloader::DllObserver& getDllObserver() const;
 private:
    Loader();
    ~Loader();
 
    std::unique_ptr<nfsloader::ThreadPool> m_threadPool;
+   std::unique_ptr<nfsloader::DllObserver> m_dllObserver;
 
    static void InitializeDebugTerminal();
    static void DestroyDebugTerminal();

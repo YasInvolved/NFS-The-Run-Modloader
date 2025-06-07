@@ -37,7 +37,9 @@ static LONG WINAPI VectoredHandler(PEXCEPTION_POINTERS pExceptionInfo)
 }
 
 Loader::Loader()
-   : m_threadPool(std::make_unique<nfsloader::ThreadPool>(4))
+   : m_threadPool(std::make_unique<nfsloader::ThreadPool>(4)), 
+     m_dllObserver(std::make_unique<nfsloader::DllObserver>())
+
 {
    InitializeDebugTerminal();
    AddVectoredExceptionHandler(1, VectoredHandler);
@@ -59,6 +61,11 @@ const Loader& Loader::GetInstance()
 nfsloader::ThreadPool& Loader::getThreadPool() const
 {
    return *m_threadPool;
+}
+
+nfsloader::DllObserver& Loader::getDllObserver() const
+{
+   return *m_dllObserver;
 }
 
 // static functions
