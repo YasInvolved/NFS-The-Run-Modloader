@@ -13,9 +13,9 @@ private:
    static std::unique_ptr<Loader> s_instance;
 
 public:
-   static Loader& GetInstance();
+   static const Loader& GetInstance();
 
-   nfsloader::ThreadPool& getThreadPool();
+   nfsloader::ThreadPool& getThreadPool() const;
 private:
    Loader();
    ~Loader();

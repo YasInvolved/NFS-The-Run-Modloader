@@ -3,6 +3,7 @@
 
 #include <fmt/base.h>
 #include <fmt/format.h>
+#include <fmt/color.h>
 
 #include <memory>
 #include <functional>
@@ -16,6 +17,7 @@
 
 #include "framework.h"
 #include "utils.h"
-#include "Loader.h"
+#include "loader/Loader.h"
+#include "dllLoadMonitor.h"
 
 #endif

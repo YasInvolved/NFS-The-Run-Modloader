@@ -1,4 +1,4 @@
-#include "pch.h"
+#include <NFSModloader/pch.h>
 
 using DirectInput8Create_t = HRESULT(WINAPI*)(HINSTANCE hInst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter);
 
@@ -9,34 +9,18 @@ namespace real
    static DirectInput8Create_t DirectInput8Create = nullptr;
 }
 
-static inline void errorMsgBox(const std::string_view text)
-{
-   MessageBoxA(nullptr, text.data(), "Fatal Error", MB_ICONEXCLAMATION | MB_OK);
-}
-
 static void loadDinput8()
 {
    if (s_dinput8Module == nullptr)
-   {
-      auto modPath = nfsloader::utils::getSystemModuleAbsolutePath("dinput8.dll");
-      s_dinput8Module = LoadLibraryA(modPath.string().c_str());
-      if (s_dinput8Module == 0)
-      {
-         errorMsgBox(fmt::format("Failed to load {}", modPath.string()));
-         std::abort();
-      }
-   }
+      s_dinput8Module = nfsloader::utils::LoadSystemDll("dinput8.dll");
 
-   if (real::DirectInput8Create == nullptr && s_dinput8Module != nullptr)
-   {
-      real::DirectInput8Create = reinterpret_cast<DirectInput8Create_t>(GetProcAddress(s_dinput8Module, "DirectInput8Create"));
-      if (real::DirectInput8Create == nullptr)
-      {
-         errorMsgBox("Failed to load DirectInput8Create");
-         std::abort();
-      }
-   }
+   if (real::DirectInput8Create == nullptr)
+      real::DirectInput8Create = nfsloader::utils::GetRequiredDllFunctionPointer<DirectInput8Create_t>(s_dinput8Module, "DirectInput8Create");
 }
+
+// I discovered that this function might be called twice by 2 different threads,
+// so thread safe mechanism is needed here
+static std::atomic<bool> s_initialized = false;
 
 extern "C" __declspec(dllexport)
 HRESULT WINAPI DirectInput8Create(HINSTANCE hInst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter)
@@ -44,8 +28,15 @@ HRESULT WINAPI DirectInput8Create(HINSTANCE hInst, DWORD dwVersion, REFIID riidl
    if (s_dinput8Module == nullptr || real::DirectInput8Create == nullptr)
       loadDinput8();
 
-   // conduct a small test
-   Loader::GetInstance().getThreadPool().enqueue([]() { fmt::println("Hello from worker thread with id"); });
+   // small test
+   if (not s_initialized.load(std::memory_order_acquire))
+   {
+      s_initialized.store(true, std::memory_order_relaxed);
+      HMODULE thisHandle = nfsloader::utils::GetThisDllHandle();
+      DisableThreadLibraryCalls(thisHandle);
+      const auto& loader = Loader::GetInstance();
+      loader.getThreadPool().enqueue(nfsloader::initializeDllNotifications);
+   }
 
    return real::DirectInput8Create(hInst, dwVersion, riidltf, ppvOut, punkOuter);
 }
