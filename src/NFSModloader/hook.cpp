@@ -27,6 +27,12 @@ static void loadDxgi()
       real::CreateDXGIFactory2 = nfsloader::utils::GetRequiredDllFunctionPointer<PFN_CreateDXGIFactory2>(real::s_dxgi, "CreateDXGIFactory2");
 }
 
+using DllCallbackReason = nfsloader::DllCallbackReason;
+static void debugDllCallback(const std::string& name, DllCallbackReason reason)
+{
+   fmt::println("{} has been {}", name, reason == DllCallbackReason::LOADED ? "loaded" : "unloaded");
+}
+
 extern "C" __declspec(dllexport)
 HRESULT WINAPI CreateDXGIFactory(REFIID riid, void** ppFactory)
 {
@@ -36,11 +42,14 @@ HRESULT WINAPI CreateDXGIFactory(REFIID riid, void** ppFactory)
    return real::CreateDXGIFactory(riid, ppFactory);
 }
 
+// Game calls CreateDXGIFactory1. Other functions are implemented for compatibility because the game requires them for some reason
 extern "C" __declspec(dllexport)
 HRESULT WINAPI CreateDXGIFactory1(REFIID riid, void** ppFactory)
 {
    if (real::s_dxgi == nullptr || real::CreateDXGIFactory1 == nullptr)
       loadDxgi();
+
+   Loader::GetInstance().getDllObserver().addCallback(debugDllCallback);
 
    return real::CreateDXGIFactory1(riid, ppFactory);
 }
