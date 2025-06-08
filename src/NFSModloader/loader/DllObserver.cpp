@@ -1,4 +1,4 @@
-#include <NFSModloader/dllLoadMonitor.h>
+#include <NFSModloader/loader/DllObserver.h>
 
 using DllCallback = nfsloader::DllCallback;
 using DllObserver = nfsloader::DllObserver;

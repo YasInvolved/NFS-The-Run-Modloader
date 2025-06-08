@@ -17,7 +17,7 @@
 
 #include <NFSModloader/framework.h>
 #include <NFSModloader/utils.h>
-#include <NFSModloader/loader/dllLoadMonitor.h>
+#include <NFSModloader/loader/DllObserver.h>
 #include <NFSModloader/loader/Loader.h>
 
 #endif

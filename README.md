@@ -6,12 +6,12 @@ Yeah that's it! A mod loader for NFS The Run.
 > to make this thing work. If you know something about reverse engineering and you want to help, well, you're very welcome my friend.
 
 ## How does it work
-Basically it imitates the dinput8.dll library loaded by the game when it's starting. It exports a dummy DirectInput8Create function
+Basically it imitates the dxgi.dll library loaded by the game when it's starting. It exports a dummy CreateDXGIFactory2 function
 that injects loader code and then calls the actual function.
 
 ## Installation guide (initial one)
 1. Navigate to the game's directory
-2. Copy the mod file (dinput8.dll) you've got and replace the original one in the game's directory
+2. Copy the mod file (dxgi.dll) you've got and replace the original one in the game's directory
 3. Start the game
 
 ## TODO/Roadmap
