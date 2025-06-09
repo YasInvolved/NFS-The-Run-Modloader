@@ -27,7 +27,7 @@ for events to respond to them.
 - Currently working with 1.1.0.0 version of game's executable so if I find something, it's going to be for this version.
 
 ## My current research
-My findings are located in [Research.md](./Research.md) file
+My findings are located in [Research.md](./research/research.md) file
 
 > [!NOTE]
 > I'm not a reverse engineering specialist. I'm more like a programmer with an idea to create something that could
