@@ -23,8 +23,11 @@ for events to respond to them.
 - Patch built-in patch for *"Running on VM"* error on newer builds of Windows 11
 
 ## Development information that might be relevant
-- I'm working on Win11 24H4
+- I'm working on Win11 24H4 ([tiny11](https://github.com/ntdevlabs/tiny11builder))
 - Currently working with 1.1.0.0 version of game's executable so if I find something, it's going to be for this version.
+
+## My current research
+My findings are located in [Research.md](./Reaserch.md) file
 
 > [!NOTE]
 > I'm not a reverse engineering specialist. I'm more like a programmer with an idea to create something that could

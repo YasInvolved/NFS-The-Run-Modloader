@@ -12,6 +12,8 @@ private:
    friend struct std::default_delete<Loader>;
    static std::unique_ptr<Loader> s_instance;
 
+   std::unique_ptr<nfsloader::ThreadPool> m_threadPool;
+   std::unique_ptr<nfsloader::DllObserver> m_dllObserver;
 public:
    static const Loader& GetInstance();
 
@@ -20,9 +22,6 @@ public:
 private:
    Loader();
    ~Loader();
-
-   std::unique_ptr<nfsloader::ThreadPool> m_threadPool;
-   std::unique_ptr<nfsloader::DllObserver> m_dllObserver;
 
    static void InitializeDebugTerminal();
    static void DestroyDebugTerminal();
