@@ -16,5 +16,5 @@
 ## Misc
 - `0x6EC2E0` is an address of some sort of engine's internal log or assert function that looks like this
 ```cpp
-void Log(const char* fmt, uint32_t unknown /*always 0*/);
+void Log(const char* fmt, uint32_t unknown /*might be a this pointer, I'm investigating it*/);
 ```
