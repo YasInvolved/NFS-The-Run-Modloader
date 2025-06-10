@@ -6,4 +6,11 @@
 #include <Unknwn.h>
 #include <winternl.h>
 
+// COM
+#include <dxgidebug.h>
+#include <wrl/client.h>
+
+template <typename T>
+using ComPtr = Microsoft::WRL::ComPtr<T>;
+
 #endif

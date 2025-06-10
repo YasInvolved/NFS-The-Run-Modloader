@@ -4,7 +4,8 @@
 > My reaserch addresses 1.1.0.0 executable
 
 ## Renderer architecture
-- `0x241F784` is an address of IDXGIFactory** in game's memory. It's static so you should not worry about offsets.
+- `0xF427DA14` is an address of IDXGIFactory* in game's memory. It's static so you should not worry about offsets.
+- `0xF427DA18` is also an address of something, probably IDXGIAdapter*
 
 > [!NOTE]
 > Currently I'm probably on track of engine's IDXGIFactory wrapper that's a part of renderer architecture

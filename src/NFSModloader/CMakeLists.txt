@@ -3,6 +3,6 @@ set_target_properties(NFSModloader PROPERTIES OUTPUT_NAME "dxgi")
 
 target_precompile_headers(NFSModloader PRIVATE "pch.h")
 target_compile_definitions(NFSModloader PRIVATE $<$<CONFIG:Debug>:NFS_MODLOADER_DEBUG>)
-target_link_libraries(NFSModloader PRIVATE fmt::fmt)
+target_link_libraries(NFSModloader PRIVATE fmt::fmt dxguid.lib)
 
 target_include_directories(NFSModloader PRIVATE "${NFS_MODLOADER_PATH}/src")
