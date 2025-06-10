@@ -7,6 +7,18 @@
 - `0xF427DA14` is an address of IDXGIFactory* in game's memory. It's static so you should not worry about offsets.
 - `0xF427DA18` is also an address of something, probably IDXGIAdapter*
 
+### Graphics adapter info (0593F8C8) (?)
+```cpp
+struct AdapterInfo
+{
+  uint32_t unkn1;
+  uint32_t unkn2;
+  uint32_t unkn3;
+  uint32_t unkn4;
+  wchar_t* adapterName;
+}
+```
+
 > [!NOTE]
 > Currently I'm probably on track of engine's IDXGIFactory wrapper that's a part of renderer architecture
 
