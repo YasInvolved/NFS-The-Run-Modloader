@@ -5,6 +5,9 @@ Yeah that's it! A mod loader for NFS The Run.
 > This is a WIP (Work In Progress) project. That means it doesn't work yet. I'm (or maybe soon we're) working hard
 > to make this thing work. If you know something about reverse engineering and you want to help, well, you're very welcome my friend.
 
+## Development frozen
+For now development of this project is frozen. I need to gather some internal energy and finish other ones I'm working on.
+
 ## How does it work
 Basically it imitates the dxgi.dll library loaded by the game when it's starting. It exports a dummy CreateDXGIFactory2 function
 that injects loader code and then calls the actual function.
